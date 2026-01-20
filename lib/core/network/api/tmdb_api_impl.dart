@@ -11,15 +11,19 @@ final class TmdbApiImpl implements TmdbApi {
 
   final Dio _dio;
 
-  /// TODO: Make configurable via /configuration endpoint
+  // TODO: Make configurable via /configuration endpoint
   String get imagesBaseUrl => TmdbConfig.imagesBaseUrl;
 
   @override
-  Future<Result<MovieResponse>> getTopRatedMovies({int page = 1}) {
+  Future<Result<MovieResponse>> getTopRatedMovies({
+    int page = 1,
+    CancelToken? cancelToken,
+  }) {
     return _guard(() async {
       final response = await _dio.get<dynamic>(
         TmdbConfig.topRatedMoviesPath,
         queryParameters: <String, dynamic>{'page': page},
+        cancelToken: cancelToken,
       );
 
       final json = _expectMap(response.data);
@@ -28,10 +32,14 @@ final class TmdbApiImpl implements TmdbApi {
   }
 
   @override
-  Future<Result<MovieDetails>> getMovieDetails(int movieId) {
+  Future<Result<MovieDetails>> getMovieDetails(
+    int movieId, {
+    CancelToken? cancelToken,
+  }) {
     return _guard(() async {
       final response = await _dio.get<dynamic>(
         '${TmdbConfig.movieDetailsPath}/$movieId',
+        cancelToken: cancelToken,
       );
 
       final json = _expectMap(response.data);
@@ -40,11 +48,16 @@ final class TmdbApiImpl implements TmdbApi {
   }
 
   @override
-  Future<Result<MovieResponse>> searchMovies(String query, {int page = 1}) {
+  Future<Result<MovieResponse>> searchMovies(
+    String query, {
+    int page = 1,
+    CancelToken? cancelToken,
+  }) {
     return _guard(() async {
       final response = await _dio.get<dynamic>(
         TmdbConfig.searchMoviePath,
         queryParameters: <String, dynamic>{'query': query, 'page': page},
+        cancelToken: cancelToken,
       );
 
       final json = _expectMap(response.data);
@@ -65,6 +78,10 @@ final class TmdbApiImpl implements TmdbApi {
 
   Exception _mapDioException(DioException e) {
     final status = e.response?.statusCode;
+    if (e.type == DioExceptionType.cancel) {
+      return Exception('Request cancelled');
+    }
+
     final message = switch (status) {
       401 => 'Unauthorized (check TMDB_API_KEY)',
       404 => 'Not found',
