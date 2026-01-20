@@ -7,9 +7,10 @@ void main() {
       final json = <String, dynamic>{
         'id': 123,
         'title': 'Interstellar',
-        'overview': 'A team travels through a wormhole.',
         'poster_path': '/poster.jpg',
         'vote_average': 7.5,
+        // Extra keys should not break parsing.
+        'overview': 'A team travels through a wormhole.',
         'release_date': '2020-01-02',
       };
 
@@ -17,57 +18,44 @@ void main() {
 
       expect(movie.id, 123);
       expect(movie.title, 'Interstellar');
-      expect(movie.overview, 'A team travels through a wormhole.');
       expect(movie.posterPath, '/poster.jpg');
       expect(movie.rating, 7.5);
-
-      expect(movie.releaseDate, isNotNull);
-      expect(movie.releaseDate!.year, 2020);
-      expect(movie.releaseDate!.month, 1);
-      expect(movie.releaseDate!.day, 2);
     });
 
     test('toJson uses API keys', () {
       final movie = Movie(
         id: 1,
         title: 'Test',
-        overview: 'Overview',
         posterPath: null,
         rating: 8.25,
-        releaseDate: DateTime(2020, 1, 2),
       );
 
       final json = movie.toJson();
 
       expect(json['id'], 1);
       expect(json['title'], 'Test');
-      expect(json['overview'], 'Overview');
       expect(json.containsKey('poster_path'), isTrue);
       expect(json['poster_path'], isNull);
       expect(json['vote_average'], 8.25);
 
-      expect(json['release_date'], isA<String>());
-      expect((json['release_date'] as String).startsWith('2020-01-02'), isTrue);
+      expect(json.containsKey('overview'), isFalse);
+      expect(json.containsKey('release_date'), isFalse);
     });
 
     test('round-trip via JSON preserves values', () {
       final original = Movie(
         id: 42,
         title: 'RoundTrip',
-        overview: 'O',
         posterPath: '/p.png',
         rating: null,
-        releaseDate: null,
       );
 
       final restored = Movie.fromJson(original.toJson());
 
       expect(restored.id, original.id);
       expect(restored.title, original.title);
-      expect(restored.overview, original.overview);
       expect(restored.posterPath, original.posterPath);
       expect(restored.rating, original.rating);
-      expect(restored.releaseDate, original.releaseDate);
     });
   });
 }
