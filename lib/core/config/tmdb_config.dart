@@ -9,6 +9,9 @@ abstract final class TmdbConfig {
   // Base TMDB API URL.
   static const String apiBaseUrl = 'https://api.themoviedb.org/3';
 
+  // Base URL for TMDB images 
+  static const String imagesBaseUrl = 'https://image.tmdb.org/t/p/';
+
   // Top Rated
   static const String topRatedMoviesPath = '/movie/top_rated';
   // Details
@@ -17,15 +20,17 @@ abstract final class TmdbConfig {
   static const String searchMoviePath = '/search/movie';
   // Query the API configuration details
   static const String configurationPath = '/configuration';
-  
+
   // TMDB API key
-  static const String _apiKey =
-      String.fromEnvironment('TMDB_API_KEY', defaultValue: '');
+  static const String _apiKey = String.fromEnvironment(
+    'TMDB_API_KEY',
+    defaultValue: '',
+  );
 
   static String get apiKey {
     if (_apiKey.isEmpty) {
       throw StateError(
-        'TMDB_API_KEY is not set. Run with --dart-define=TMDB_API_KEY=...'
+        'TMDB_API_KEY is not set. Run with --dart-define=TMDB_API_KEY=...',
       );
     }
     return _apiKey;
@@ -40,5 +45,4 @@ abstract final class TmdbConfig {
     if (path.isEmpty) return '';
     return '$baseUrl$size$path';
   }
-
 }
