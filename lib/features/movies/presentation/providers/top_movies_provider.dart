@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tmdb/core/network/api/tmdb_api_impl.dart';
-import 'package:tmdb/core/network/tmdb_dio.dart';
 import 'package:tmdb/features/movies/domain/movie.dart';
 import 'package:tmdb/features/movies/data/movie_repository.dart';
+import 'package:tmdb/features/movies/data/movie_repository_provider.dart';
 import 'package:tmdb/utils/result.dart' as result;
 
 part 'top_movies_provider.g.dart';
@@ -35,9 +34,7 @@ class TopRatedMoviesState {
 
 @riverpod
 class TopRatedMoviesNotifier extends _$TopRatedMoviesNotifier {
-  late final MovieRepository _repository = MovieRepositoryImpl(
-    TmdbApiImpl(createTmdbDio()),
-  );
+  MovieRepository get _repository => ref.read(movieRepositoryProvider);
 
   @override
   FutureOr<TopRatedMoviesState> build() async {

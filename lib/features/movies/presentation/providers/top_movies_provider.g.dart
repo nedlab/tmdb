@@ -35,7 +35,7 @@ final class TopRatedMoviesNotifierProvider
 }
 
 String _$topRatedMoviesNotifierHash() =>
-    r'715579f8b8f5358727498debaf0cbbf5557b6920';
+    r'9952a96d6567d8f66cea360d0636f3b424bd77dc';
 
 abstract class _$TopRatedMoviesNotifier
     extends $AsyncNotifier<TopRatedMoviesState> {
