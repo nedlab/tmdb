@@ -14,21 +14,38 @@ class TopMoviesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Top Rated Movies')),
       body: state.when(
-        data: (value) => GridView.builder(
-          padding: const EdgeInsets.all(10),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.7,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          itemCount: value.movies.length,
-          itemBuilder: (context, index) {
-            final movie = value.movies[index];
+        data: (value) => LayoutBuilder(
+          builder: (context, constraints) {
+            const padding = 16.0;
+            const crossAxisCount = 2;
+            const spacing = 16.0;
+            const posterAspectRatio = 163 / 269;
 
-            return MovieCard(
-              movie: movie,
-              onTap: () => context.push('/movie-details/${movie.id}'),
+            final gridWidth = constraints.maxWidth - (padding * 2);
+            final tileWidth =
+                (gridWidth - ((crossAxisCount - 1) * spacing)) / crossAxisCount;
+
+            final posterHeight = tileWidth / posterAspectRatio;
+            const textAreaHeight = 60.0;
+            final tileHeight = posterHeight + textAreaHeight;
+
+            return GridView.builder(
+              padding: const EdgeInsets.all(padding),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                mainAxisExtent: tileHeight,
+                crossAxisSpacing: spacing,
+                mainAxisSpacing: spacing,
+              ),
+              itemCount: value.movies.length,
+              itemBuilder: (context, index) {
+                final movie = value.movies[index];
+
+                return MovieCard(
+                  movie: movie,
+                  onTap: () => context.push('/movie-details/${movie.id}'),
+                );
+              },
             );
           },
         ),
