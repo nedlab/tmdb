@@ -4,7 +4,7 @@ import '../../domain/movie.dart';
 
 part 'movie_response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class MovieResponse {
 	final int page;
 
