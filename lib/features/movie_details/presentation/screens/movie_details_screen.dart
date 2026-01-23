@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tmdb/features/favorites/favorites_provider.dart';
+import 'package:tmdb/features/favorites/presentation/widgets/favorites_button.dart';
 import 'package:tmdb/features/movie_details/presentation/providers/movie_details_provider.dart';
 import 'package:tmdb/features/movies/presentation/widgets/movie_poster.dart';
 
 class MovieDetailsScreen extends ConsumerWidget {
-  const MovieDetailsScreen({super.key, required this.movieId, required this.movieTitle});
+  const MovieDetailsScreen({
+    super.key,
+    required this.movieId,
+    required this.movieTitle,
+  });
   final int movieId;
   final String movieTitle;
 
@@ -39,13 +45,14 @@ class MovieDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(movieDetailsProvider(movieId));
+    final details = ref.watch(movieDetailsProvider(movieId));
+    final favorites = ref.watch(favoritesProvider);
     return Scaffold(
       appBar: AppBar(title: Text(movieTitle)),
-      body: state.when(
+      body: details.when(
         data: (movie) {
-          final double posterWidth =
-              (MediaQuery.sizeOf(context).width * 0.72).clamp(220.0, 340.0);
+          final double posterWidth = (MediaQuery.sizeOf(context).width * 0.72)
+              .clamp(220.0, 340.0);
           final double posterHeight = posterWidth * 1.5; // 2:3 poster ratio
 
           final releaseDateText = _formatReleaseDate(movie.releaseDate);
@@ -82,6 +89,19 @@ class MovieDetailsScreen extends ConsumerWidget {
                     Text(
                       releaseDateText,
                       style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 10),
+                    Center(
+                      child: favorites.when(
+                        data: (ids) => FavoritesButton(
+                          isFavorite: ids.contains(movieId),
+                          onPressed: () {
+                            ref.read(favoritesProvider.notifier).toggle(movieId);
+                          },
+                        ),
+                        loading: () => const SizedBox.shrink(),
+                        error: (error, stackTrace) => const SizedBox.shrink(),
+                      ),
                     ),
                   ],
                 ],
