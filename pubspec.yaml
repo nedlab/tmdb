@@ -35,4 +35,6 @@ flutter:
 
   assets:
     - assets/images/Loader.svg
+    - assets/images/StarOn.svg
+    - assets/images/StarOff.svg
     
