@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb/app/router/routes.dart';
 import 'package:tmdb/core/widgets/loader.dart';
+import 'package:tmdb/features/favorites/favorites_provider.dart';
 import 'package:tmdb/features/movies/presentation/providers/top_movies_provider.dart';
 import 'package:tmdb/features/movies/presentation/widgets/movie_card.dart';
 
@@ -44,6 +45,7 @@ class TopMoviesScreen extends ConsumerWidget {
 
                 return MovieCard(
                   movie: movie,
+                  isFavorite: ref.watch(isFavoriteProvider(movie.id)),
                   onTap: () {
                     final path = AppRoutes.movieDetails
                         .replaceFirst(':id', movie.id.toString());

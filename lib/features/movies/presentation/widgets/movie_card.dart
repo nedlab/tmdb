@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tmdb/features/movies/domain/movie.dart';
 import 'package:tmdb/features/movies/presentation/widgets/movie_poster.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
   final VoidCallback? onTap;
+  final bool? isFavorite;
 
-  const MovieCard({super.key, required this.movie, this.onTap});
+  const MovieCard({super.key, required this.movie, this.onTap, this.isFavorite});
 
   @override
   Widget build(BuildContext context) {
     final posterUrl = movie.posterPath;
     final rating = movie.rating;
+
+    final String? favoriteAsset = switch (isFavorite) {
+      true => 'assets/images/StarOn.svg',
+      false => 'assets/images/StarOff.svg',
+      null => null,
+    };
 
     return Material(
       color: Colors.transparent,
@@ -24,7 +32,22 @@ class MovieCard extends StatelessWidget {
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: MoviePoster(posterUrl: posterUrl),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    MoviePoster(posterUrl: posterUrl),
+                    if (favoriteAsset != null)
+                      Positioned(
+                        top: 12,
+                        right: 12,
+                        child: SvgPicture.asset(
+                          favoriteAsset,
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 8),
