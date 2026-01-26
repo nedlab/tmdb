@@ -46,10 +46,10 @@ class TopRatedMoviesNotifier extends _$TopRatedMoviesNotifier {
 
     return switch (repoResult) {
       result.Ok(value: final response) => TopRatedMoviesState(
-          movies: response.results,
-          currentPage: response.page,
-          totalPages: response.totalPages,
-        ),
+        movies: response.results,
+        currentPage: response.page,
+        totalPages: response.totalPages,
+      ),
       result.Error(error: final e) => throw e,
     };
   }
@@ -57,4 +57,16 @@ class TopRatedMoviesNotifier extends _$TopRatedMoviesNotifier {
   Future<void> goToPage(int page) async {
     state = await AsyncValue.guard(() => _fetchPage(page));
   }
+}
+
+@riverpod
+int topMoviesCurrentPage(Ref ref) {
+  final state = ref.watch(topRatedMoviesProvider);
+  return state.maybeWhen(data: (value) => value.currentPage, orElse: () => 1);
+}
+
+@riverpod
+int topMoviesTotalPages(Ref ref) {
+  final state = ref.watch(topRatedMoviesProvider);
+  return state.maybeWhen(data: (value) => value.totalPages, orElse: () => 1);
 }
