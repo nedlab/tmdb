@@ -5,13 +5,14 @@ import 'package:tmdb/features/movies/domain/movie.dart';
 import 'package:tmdb/utils/result.dart';
 import 'package:tmdb/core/network/api/tmdb_api.dart';
 import 'package:tmdb/core/config/tmdb_config.dart';
+import 'package:dio/dio.dart';
 
 abstract class MovieRepository {
-  Future<Result<MovieResponse>> getTopRatedMovies({int page = 1});
+  Future<Result<MovieResponse>> getTopRatedMovies({int page = 1, CancelToken? cancelToken});
 
-  Future<Result<MovieDetails>> getMovieDetails(int movieId);
+  Future<Result<MovieDetails>> getMovieDetails(int movieId, {CancelToken? cancelToken});
 
-  Future<Result<MovieResponse>> searchMovies(String query, {int page = 1});
+  Future<Result<MovieResponse>> searchMovies(String query, {int page = 1, CancelToken? cancelToken});
 }
 
 class MovieRepositoryImpl implements MovieRepository {
@@ -20,8 +21,11 @@ class MovieRepositoryImpl implements MovieRepository {
   final TmdbApi _api;
 
   @override
-  Future<Result<MovieResponse>> getTopRatedMovies({int page = 1}) async {
-    final result = await _api.getTopRatedMovies(page: page);
+  Future<Result<MovieResponse>> getTopRatedMovies({int page = 1, CancelToken? cancelToken}) async {
+    final result = await _api.getTopRatedMovies(
+      page: page,
+      cancelToken: cancelToken,
+    );
     return switch (result) {
       Ok(value: final data) => Result.ok(_withAbsoluteImageUrls(data)),
       Error(error: final e) => Result.error(e),
@@ -29,8 +33,11 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<Result<MovieDetails>> getMovieDetails(int movieId) async {
-    final result = await _api.getMovieDetails(movieId);
+  Future<Result<MovieDetails>> getMovieDetails(int movieId, {CancelToken? cancelToken}) async {
+    final result = await _api.getMovieDetails(
+      movieId,
+      cancelToken: cancelToken,
+    );
     return switch (result) {
       Ok(value: final data) => Result.ok(_withAbsoluteImageUrlsDetails(data)),
       Error(error: final e) => Result.error(e),
@@ -38,8 +45,12 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<Result<MovieResponse>> searchMovies(String query, {int page = 1}) async {
-    final result = await _api.searchMovies(query, page: page);
+  Future<Result<MovieResponse>> searchMovies(String query, {int page = 1, CancelToken? cancelToken}) async {
+    final result = await _api.searchMovies(
+      query,
+      page: page,
+      cancelToken: cancelToken,
+    );
     return switch (result) {
       Ok(value: final data) => Result.ok(_withAbsoluteImageUrls(data)),
       Error(error: final e) => Result.error(e),
