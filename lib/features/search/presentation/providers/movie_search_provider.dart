@@ -39,9 +39,3 @@ Future<List<Movie>> movieSearch(Ref ref, String query) async {
     result.Error(error: final e) => throw e,
   };
 }
-
-@riverpod
-int movieSearchResultsCount(Ref ref, String query) {
-  final search = ref.watch(movieSearchProvider(query));
-  return search.maybeWhen(data: (list) => list.length, orElse: () => 0);
-}
