@@ -22,7 +22,7 @@ final class MovieSearchProvider
     with $FutureModifier<List<Movie>>, $FutureProvider<List<Movie>> {
   MovieSearchProvider._({
     required MovieSearchFamily super.from,
-    required (String, int) super.argument,
+    required String super.argument,
   }) : super(
          retry: null,
          name: r'movieSearchProvider',
@@ -38,7 +38,7 @@ final class MovieSearchProvider
   String toString() {
     return r'movieSearchProvider'
         ''
-        '$argument';
+        '($argument)';
   }
 
   @$internal
@@ -49,8 +49,8 @@ final class MovieSearchProvider
 
   @override
   FutureOr<List<Movie>> create(Ref ref) {
-    final argument = this.argument as (String, int);
-    return movieSearch(ref, argument.$1, argument.$2);
+    final argument = this.argument as String;
+    return movieSearch(ref, argument);
   }
 
   @override
@@ -64,10 +64,10 @@ final class MovieSearchProvider
   }
 }
 
-String _$movieSearchHash() => r'1f93a66c536312689891aec8f3e7c06c3fda3e58';
+String _$movieSearchHash() => r'77b2d35a572bc514c4aa8b592ecfccc45d21835a';
 
 final class MovieSearchFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<List<Movie>>, (String, int)> {
+    with $FunctionalFamilyOverride<FutureOr<List<Movie>>, String> {
   MovieSearchFamily._()
     : super(
         retry: null,
@@ -77,8 +77,8 @@ final class MovieSearchFamily extends $Family
         isAutoDispose: true,
       );
 
-  MovieSearchProvider call(String query, int page) =>
-      MovieSearchProvider._(argument: (query, page), from: this);
+  MovieSearchProvider call(String query) =>
+      MovieSearchProvider._(argument: query, from: this);
 
   @override
   String toString() => r'movieSearchProvider';
@@ -92,7 +92,7 @@ final class MovieSearchResultsCountProvider
     with $Provider<int> {
   MovieSearchResultsCountProvider._({
     required MovieSearchResultsCountFamily super.from,
-    required (String, int) super.argument,
+    required String super.argument,
   }) : super(
          retry: null,
          name: r'movieSearchResultsCountProvider',
@@ -108,7 +108,7 @@ final class MovieSearchResultsCountProvider
   String toString() {
     return r'movieSearchResultsCountProvider'
         ''
-        '$argument';
+        '($argument)';
   }
 
   @$internal
@@ -118,8 +118,8 @@ final class MovieSearchResultsCountProvider
 
   @override
   int create(Ref ref) {
-    final argument = this.argument as (String, int);
-    return movieSearchResultsCount(ref, argument.$1, argument.$2);
+    final argument = this.argument as String;
+    return movieSearchResultsCount(ref, argument);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -143,10 +143,10 @@ final class MovieSearchResultsCountProvider
 }
 
 String _$movieSearchResultsCountHash() =>
-    r'17f36c765090068cb19143fc31bde9deef80402a';
+    r'b7ebdd8771975a4932f2a4344b45ff4ebbb1c9fc';
 
 final class MovieSearchResultsCountFamily extends $Family
-    with $FunctionalFamilyOverride<int, (String, int)> {
+    with $FunctionalFamilyOverride<int, String> {
   MovieSearchResultsCountFamily._()
     : super(
         retry: null,
@@ -156,8 +156,8 @@ final class MovieSearchResultsCountFamily extends $Family
         isAutoDispose: true,
       );
 
-  MovieSearchResultsCountProvider call(String query, int page) =>
-      MovieSearchResultsCountProvider._(argument: (query, page), from: this);
+  MovieSearchResultsCountProvider call(String query) =>
+      MovieSearchResultsCountProvider._(argument: query, from: this);
 
   @override
   String toString() => r'movieSearchResultsCountProvider';
