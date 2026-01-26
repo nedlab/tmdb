@@ -33,7 +33,7 @@ final class FavoritesNotifierProvider
   FavoritesNotifier create() => FavoritesNotifier();
 }
 
-String _$favoritesNotifierHash() => r'daf1eeb242c096a7f8964d6f3fd3026386f41760';
+String _$favoritesNotifierHash() => r'c690f5210284fa6d1945606639a59693adb4208b';
 
 abstract class _$FavoritesNotifier extends $AsyncNotifier<Set<int>> {
   FutureOr<Set<int>> build();
@@ -109,7 +109,7 @@ final class IsFavoriteProvider extends $FunctionalProvider<bool, bool, bool>
   }
 }
 
-String _$isFavoriteHash() => r'00a3d5d73ac09850592732f09f95d352e6b0b607';
+String _$isFavoriteHash() => r'86f1c9b916399a9cc425fb1cb640027b91d39bb6';
 
 final class IsFavoriteFamily extends $Family
     with $FunctionalFamilyOverride<bool, int> {
