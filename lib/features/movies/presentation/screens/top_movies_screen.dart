@@ -31,6 +31,7 @@ class TopMoviesScreen extends ConsumerWidget {
             ),
           ),
         ],
+        actionsPadding: EdgeInsets.only(right: 16)
       ),
       body: state.when(
         data: (value) => LayoutBuilder(
