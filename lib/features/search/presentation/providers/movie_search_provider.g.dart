@@ -64,7 +64,7 @@ final class MovieSearchProvider
   }
 }
 
-String _$movieSearchHash() => r'77b2d35a572bc514c4aa8b592ecfccc45d21835a';
+String _$movieSearchHash() => r'7a214c14c9dec767c854c62d435e222e1b19edd9';
 
 final class MovieSearchFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Movie>>, String> {
