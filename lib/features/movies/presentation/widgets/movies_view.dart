@@ -22,7 +22,7 @@ class MoviesView extends ConsumerWidget {
       builder: (context, constraints) {
         const crossAxisCount = 2;
         const spacing = 16.0;
-        const posterAspectRatio = 163 / 269;
+        const posterAspectRatio = 163 / 233;
 
         // Calculate expected padding width to subtract from total width for column width calculation
         final double horizontalPadding = padding.horizontal;

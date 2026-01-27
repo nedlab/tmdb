@@ -57,7 +57,7 @@ class TopMoviesScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(16.0),
         ),
         error: (error, _) => Text('Error $error'),
-        loading: () => const Center(child: app_loader.SvgLoader()),
+        loading: () => const Center(child: app_loader.SvgLoader(size: 80.0)),
       ),
     );
   }
