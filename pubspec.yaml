@@ -41,4 +41,6 @@ flutter:
     - assets/images/StarOff.svg
     - assets/images/Search.svg
     - assets/images/NotFound.svg
+    - assets/images/Sun.svg
+    - assets/images/Moon.svg
     
