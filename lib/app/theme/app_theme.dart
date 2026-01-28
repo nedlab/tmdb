@@ -109,11 +109,20 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(textStyle: _buttonText),
     ),
-    // inputDecorationTheme: const InputDecorationTheme(
-    //   filled: true,
-    //   fillColor: AppColors.lightSearch,
-    //   border: OutlineInputBorder(borderSide: BorderSide.none),
-    // ),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(
+        fontFamily: _fontFamily,
+        fontWeight: FontWeight.w500,
+        fontSize: 18,
+        color: AppColors.lightTxt.withValues(alpha: 0.2),
+      ),
+      filled: true,
+      fillColor: AppColors.lightSearch,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+    ),
   );
 
   static ThemeData get darkTheme => ThemeData(
@@ -148,10 +157,19 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(textStyle: _buttonText),
     ),
-    // inputDecorationTheme: const InputDecorationTheme(
-    //  filled: true,
-    //   fillColor: AppColors.darkSearch,
-    //   border: OutlineInputBorder(borderSide: BorderSide.none),
-    // ),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(
+        fontFamily: _fontFamily,
+        fontWeight: FontWeight.w500,
+        fontSize: 18,
+        color: AppColors.darkTxt.withValues(alpha: 0.2),
+      ),
+      filled: true,
+      fillColor: AppColors.darkSearch,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+    ),
   );
 }
