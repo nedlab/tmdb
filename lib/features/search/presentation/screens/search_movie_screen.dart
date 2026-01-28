@@ -40,6 +40,7 @@ class _SearchMovieScreenState extends ConsumerState<SearchMovieScreen> {
           children: [
             TextField(
               controller: _controller,
+              style: Theme.of(context).textTheme.displayMedium,
               onChanged: (value) {
                 setState(() {
                   _query = value;
@@ -69,9 +70,7 @@ class _SearchMovieScreenState extends ConsumerState<SearchMovieScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Search results (${movies.length})',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.displayMedium
                       ),
                     ),
                 orElse: () => const SizedBox.shrink(),

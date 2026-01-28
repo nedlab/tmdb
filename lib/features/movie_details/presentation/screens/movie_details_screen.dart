@@ -52,8 +52,8 @@ class MovieDetailsScreen extends ConsumerWidget {
       body: details.when(
         data: (movie) {
           final double posterWidth = (MediaQuery.sizeOf(context).width * 0.72)
-              .clamp(220.0, 340.0);
-          final double posterHeight = posterWidth * 1.5; // 2:3 poster ratio
+              .clamp(250.0, 357.0);
+          final double posterHeight = posterWidth * (357.0/250.0); // 2:3 poster ratio
 
           final releaseDateText = _formatReleaseDate(movie.releaseDate);
 
@@ -73,11 +73,11 @@ class MovieDetailsScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Text(
                     'Rating: ${_formatRating(movie.rating)}',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -90,7 +90,7 @@ class MovieDetailsScreen extends ConsumerWidget {
                       releaseDateText,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 0),
                     Center(
                       child: favorites.when(
                         data: (ids) => FavoritesButton(
