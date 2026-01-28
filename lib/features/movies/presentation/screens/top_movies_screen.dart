@@ -52,10 +52,16 @@ class TopMoviesScreen extends ConsumerWidget {
         actionsPadding: EdgeInsets.only(right: 16),
       ),
       body: state.when(
-        data: (value) => MoviesView(
-          movies: value.movies,
-          padding: const EdgeInsets.all(16.0),
-        ),
+        data:
+            (value) => MoviesView(
+              movies: value.movies,
+              padding: const EdgeInsets.all(16.0),
+              currentPage: value.currentPage,
+              totalPages: value.totalPages,
+              onPageChanged:
+                  (page) =>
+                      ref.read(topRatedMoviesProvider.notifier).goToPage(page),
+            ),
         error: (error, _) => Text('Error $error'),
         loading: () => const Center(child: app_loader.SvgLoader(size: 80.0)),
       ),

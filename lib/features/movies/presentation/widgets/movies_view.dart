@@ -5,15 +5,22 @@ import 'package:tmdb/app/router/routes.dart';
 import 'package:tmdb/features/favorites/favorites_provider.dart';
 import 'package:tmdb/features/movies/domain/movie.dart';
 import 'package:tmdb/features/movies/presentation/widgets/movie_card.dart';
+import 'package:tmdb/core/widgets/pagination.dart';
 
 class MoviesView extends ConsumerWidget {
   final List<Movie> movies;
   final EdgeInsetsGeometry padding;
+  final int currentPage;
+  final int totalPages;
+  final ValueChanged<int>? onPageChanged;
 
   const MoviesView({
     super.key,
     required this.movies,
     this.padding = EdgeInsets.zero,
+    this.currentPage = 1,
+    this.totalPages = 1,
+    this.onPageChanged,
   });
 
   @override
@@ -35,30 +42,57 @@ class MoviesView extends ConsumerWidget {
         const textAreaHeight = 60.0;
         final tileHeight = posterHeight + textAreaHeight;
 
-        return GridView.builder(
-          padding: padding,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            mainAxisExtent: tileHeight,
-            crossAxisSpacing: spacing,
-            mainAxisSpacing: spacing,
-          ),
-          itemCount: movies.length,
-          itemBuilder: (context, index) {
-            final movie = movies[index];
-            return MovieCard(
-              movie: movie,
-              isFavorite: ref.watch(isFavoriteProvider(movie.id)),
-              onTap: () {
-                final path = AppRoutes.movieDetails.replaceFirst(
-                  ':id',
-                  movie.id.toString(),
-                );
-                final title = Uri.encodeComponent(movie.title);
-                context.push('$path?title=$title');
-              },
-            );
-          },
+        final showPagination =
+            movies.isNotEmpty && totalPages > 1 && onPageChanged != null;
+
+        return CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: padding,
+              sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  mainAxisExtent: tileHeight,
+                  crossAxisSpacing: spacing,
+                  mainAxisSpacing: spacing,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final movie = movies[index];
+                    return MovieCard(
+                      movie: movie,
+                      isFavorite: ref.watch(isFavoriteProvider(movie.id)),
+                      onTap: () {
+                        final path = AppRoutes.movieDetails.replaceFirst(
+                          ':id',
+                          movie.id.toString(),
+                        );
+                        final title = Uri.encodeComponent(movie.title);
+                        context.push('$path?title=$title');
+                      },
+                    );
+                  },
+                  childCount: movies.length,
+                ),
+              ),
+            ),
+            if (showPagination)
+              SliverPadding(
+                padding: EdgeInsets.fromLTRB(
+                  40,
+                  8,
+                  0,
+                  32,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: Pagination(
+                    currentPage: currentPage,
+                    totalPages: totalPages,
+                    onCurrentPageChanged: onPageChanged!,
+                  ),
+                ),
+              ),
+          ],
         );
       },
     );
