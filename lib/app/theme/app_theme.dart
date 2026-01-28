@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 abstract class AppColors {
   static const Color darkBg = Color(0xFF111111);
@@ -123,6 +124,19 @@ class AppTheme {
         borderSide: BorderSide.none,
       ),
     ),
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder:
+          (context) => Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: SvgPicture.asset(
+              'assets/images/Left.svg',
+              colorFilter: const ColorFilter.mode(
+                AppColors.lightTxt,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+    ),
   );
 
   static ThemeData get darkTheme => ThemeData(
@@ -170,6 +184,19 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
       ),
+    ),
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder:
+          (context) => Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: SvgPicture.asset(
+              'assets/images/Left.svg',
+              colorFilter: const ColorFilter.mode(
+                AppColors.darkTxt,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
     ),
   );
 }
