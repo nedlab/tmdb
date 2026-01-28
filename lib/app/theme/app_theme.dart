@@ -44,14 +44,32 @@ class AppTheme {
       fontSize: 12,
       height: 1.25,
     );
+    const labelLarge = TextStyle(
+      fontFamily: _fontFamily,
+      fontWeight: FontWeight.w600,
+      fontSize: 14,
+    );
+
+    const labelSmall = TextStyle(
+      fontFamily: _fontFamily,
+      fontWeight: FontWeight.w600,
+      fontSize: 10,
+    );
+
+    const displayMedium = TextStyle(
+      fontFamily: _fontFamily,
+      fontWeight: FontWeight.w700,
+      fontSize: 18,
+    );
 
     return base.copyWith(
       bodyLarge: body.copyWith(color: textColor),
       bodyMedium: body.copyWith(color: textColor),
       bodySmall: body.copyWith(color: textColor),
-      labelLarge: body.copyWith(color: textColor),
+      labelLarge: labelLarge.copyWith(color: textColor),
       labelMedium: body.copyWith(color: textColor),
-      labelSmall: body.copyWith(color: textColor),
+      labelSmall: labelSmall.copyWith(color: textColor),
+      displayMedium: displayMedium.copyWith(color: textColor),
     );
   }
 
@@ -98,6 +116,9 @@ class AppTheme {
       toolbarTextStyle: _appBarTitleLight,
     ),
     iconTheme: const IconThemeData(color: AppColors.lightTxt),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.lightTxt,
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(textStyle: _buttonText),
     ),
@@ -159,6 +180,9 @@ class AppTheme {
       toolbarTextStyle: _appBarTitleDark,
     ),
     iconTheme: const IconThemeData(color: AppColors.darkTxt),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.darkTxt,
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(textStyle: _buttonText),
     ),
