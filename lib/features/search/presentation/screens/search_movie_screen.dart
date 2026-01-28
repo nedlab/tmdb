@@ -46,10 +46,6 @@ class _SearchMovieScreenState extends ConsumerState<SearchMovieScreen> {
                 });
               },
               decoration: InputDecoration(
-                filled: true,
-                fillColor: Theme.of(
-                  context,
-                ).colorScheme.surfaceContainerHighest,
                 hintText: 'Search',
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -62,10 +58,6 @@ class _SearchMovieScreenState extends ConsumerState<SearchMovieScreen> {
                       BlendMode.srcIn,
                     ),
                   ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
                 ),
               ),
             ),
