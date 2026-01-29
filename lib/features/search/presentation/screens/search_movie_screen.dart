@@ -65,14 +65,13 @@ class _SearchMovieScreenState extends ConsumerState<SearchMovieScreen> {
             const SizedBox(height: 16),
             if (query.length >= 3)
               search.maybeWhen(
-                data:
-                    (movies) => Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Search results (${movies.length})',
-                        style: Theme.of(context).textTheme.displayMedium
-                      ),
-                    ),
+                data: (movies) => Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Search results (${movies.length})',
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                ),
                 orElse: () => const SizedBox.shrink(),
               ),
             const SizedBox(height: 16),
@@ -82,7 +81,13 @@ class _SearchMovieScreenState extends ConsumerState<SearchMovieScreen> {
                   if (movies.isEmpty && query.length >= 3) {
                     return Align(
                       alignment: const Alignment(0, -0.75),
-                      child: SvgPicture.asset('assets/images/NotFound.svg'),
+                      child: SvgPicture.asset(
+                        'assets/images/NotFound.svg',
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.onSurface,
+                          BlendMode.srcIn,
+                        ),
+                      ),
                     );
                   }
                   return MoviesView(movies: movies);

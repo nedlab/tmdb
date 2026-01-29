@@ -19,7 +19,7 @@ class TopMoviesScreen extends ConsumerWidget {
         .maybeWhen(data: (data) => data, orElse: () => ThemeMode.light);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Top Rated Movies'),
+        title: const Text('Top Movies'),
         actions: [
           IconButton(
             onPressed: () => context.push(AppRoutes.movieSearch),
