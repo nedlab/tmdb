@@ -6,7 +6,7 @@
       "request": "launch",
       "type": "dart",
       "args": [
-        "--dart-define-from-file=.vscode/tmdb_defines.json"
+        "--dart-define-from-file=tmdb_defines.json"
       ]
     }
   ]

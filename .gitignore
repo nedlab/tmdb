@@ -24,7 +24,7 @@ migrate_working_dir/
 #.vscode/
 
 # Local secrets for Flutter --dart-define-from-file
-.vscode/tmdb_defines.json
+tmdb_defines.json
 
 # Flutter/Dart/Pub related
 **/doc/api/
